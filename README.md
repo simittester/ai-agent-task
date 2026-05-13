@@ -5,7 +5,7 @@ The agent receives a natural-language question, decides which tools to call,
 executes them, and returns a concise answer.
 
 It is a single-agent system powered by Google's **Gemini** model
-(`gemini-flash-latest`, free tier). The model performs the reasoning; the
+(`gemini-2.5-flash`, free tier). The model performs the reasoning; the
 project supplies the tools, the agent loop, configuration, tests, and a CLI.
 
 ---
@@ -95,14 +95,14 @@ pip install -r requirements.txt
 
 ```
 GEMINI_API_KEY=AIzaSy...your-key...
-GEMINI_MODEL=gemini-flash-latest
+GEMINI_MODEL=gemini-2.5-flash
 AGENT_MAX_STEPS=6
 ```
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `GEMINI_API_KEY` | *(required)* | Your Gemini key. |
-| `GEMINI_MODEL` | `gemini-flash-latest` | Model name. `gemini-flash-latest` is free for every account; some newer accounts do not get free-tier access to `gemini-2.0-flash`. |
+| `GEMINI_MODEL` | `gemini-2.5-flash` | Model name. `gemini-2.5-flash` has a generous free-tier limit (~1500 requests/day). Avoid `gemini-flash-latest`: it follows the newest model, which usually has the most restrictive free tier. |
 | `AGENT_MAX_STEPS` | `6` | Cap on tool-call rounds before the loop bails out. |
 
 ---
