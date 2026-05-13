@@ -5,7 +5,7 @@ The agent receives a natural-language question, decides which tools to call,
 executes them, and returns a concise answer.
 
 It is a single-agent system powered by Google's **Gemini** model
-(`gemini-2.0-flash`, free tier). The model performs the reasoning; the
+(`gemini-flash-latest`, free tier). The model performs the reasoning; the
 project supplies the tools, the agent loop, configuration, tests, and a CLI.
 
 ---
@@ -17,14 +17,22 @@ The agent has access to five tools:
 | Tool | Purpose |
 | --- | --- |
 | `calculator` | Safely evaluate arithmetic expressions (no `eval`; AST-walked whitelist of operators and math functions). |
-| `wikipedia_lookup` | Fetch a short summary of a topic from English Wikipedia. |
-| `web_search` | Search the web via DuckDuckGo and return result snippets. No API key. |
+| `wikipedia_lookup` | Fetch a short summary of a topic from English Wikipedia (no key — Wikipedia's public API is open). |
+| `web_search` | Search the web through DuckDuckGo (no key — DuckDuckGo is keyless; the `ddgs` library queries the public results page). |
 | `notes_add` | Append a note to a local JSON file (`data/notes.json`). |
 | `notes_list` | List all saved notes. |
 
 The model receives JSON schemas describing each tool. It picks tools by name,
 fills in their arguments, and the agent executes them and feeds results back
 until the model produces a final natural-language answer.
+
+### What needs an API key, and what does not
+
+The project uses **exactly one** API key in total: `GEMINI_API_KEY`, for the
+LLM at the top of the system. None of the five tools require their own
+keys — Wikipedia and DuckDuckGo both expose keyless endpoints, the
+calculator runs in-process, and the notes tool reads/writes a local file.
+See [Configuration](#configuration) below for how to set the Gemini key.
 
 ---
 
@@ -142,7 +150,8 @@ There are **31 tests** covering:
 - Agent loop: immediate answer, single tool call, unknown tool handling,
   max-step loop breaker, empty-query short-circuit (LLM faked).
 
-Mocking the LLM means **no API key is required to run the tests**.
+Mocking the LLM means **no Gemini API key is required to run the tests** —
+the test suite is fully offline.
 
 ---
 
