@@ -87,14 +87,14 @@ pip install -r requirements.txt
 
 ```
 GEMINI_API_KEY=AIzaSy...your-key...
-GEMINI_MODEL=gemini-2.0-flash
+GEMINI_MODEL=gemini-flash-latest
 AGENT_MAX_STEPS=6
 ```
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `GEMINI_API_KEY` | *(required)* | Your Gemini key. |
-| `GEMINI_MODEL` | `gemini-2.0-flash` | Model name. Any tool-capable Gemini model works. |
+| `GEMINI_MODEL` | `gemini-flash-latest` | Model name. `gemini-flash-latest` is free for every account; some newer accounts do not get free-tier access to `gemini-2.0-flash`. |
 | `AGENT_MAX_STEPS` | `6` | Cap on tool-call rounds before the loop bails out. |
 
 ---

@@ -25,6 +25,6 @@ class Settings:
 def load_settings() -> Settings:
     return Settings(
         gemini_api_key=os.getenv("GEMINI_API_KEY", "").strip(),
-        gemini_model=os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip(),
+        gemini_model=os.getenv("GEMINI_MODEL", "gemini-flash-latest").strip(),
         agent_max_steps=int(os.getenv("AGENT_MAX_STEPS", "6")),
     )

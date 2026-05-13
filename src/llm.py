@@ -6,6 +6,7 @@ substitute a scripted fake. Only `GeminiClient` performs real API calls.
 
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Protocol
 
@@ -41,7 +42,13 @@ class GeminiClient:
             raise ValueError(
                 "GEMINI_API_KEY is not set. Copy .env.example to .env and add your key."
             )
-        import google.generativeai as genai  # type: ignore[import-not-found]
+        # The `google.generativeai` package emits a FutureWarning on import
+        # with stacklevel=2, which attributes it to this file rather than to
+        # itself — so a module-name filter cannot silence it. Wrap the import
+        # in catch_warnings instead.
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", FutureWarning)
+            import google.generativeai as genai  # type: ignore[import-not-found]
 
         self._genai = genai
         genai.configure(api_key=api_key)

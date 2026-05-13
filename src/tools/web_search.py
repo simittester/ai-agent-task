@@ -13,9 +13,10 @@ def web_search(query: str, max_results: int = 5) -> Dict[str, Any]:
 
     try:
         # Imported lazily so tests that mock this module don't pay the import cost.
-        from duckduckgo_search import DDGS
+        # `ddgs` is the renamed successor to `duckduckgo_search`; same API.
+        from ddgs import DDGS
     except ImportError as exc:
-        return {"ok": False, "error": f"duckduckgo_search not installed: {exc}"}
+        return {"ok": False, "error": f"ddgs not installed: {exc}"}
 
     try:
         with DDGS() as ddgs:

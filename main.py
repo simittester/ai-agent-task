@@ -10,9 +10,15 @@ from __future__ import annotations
 
 import argparse
 import sys
+import warnings
 from typing import List
 
-from config import load_settings
+# Silence non-actionable noise from upstream packages. These warnings are
+# cosmetic on the CLI and have no bearing on correctness.
+warnings.filterwarnings("ignore", category=FutureWarning, module=r"google\.generativeai.*")
+warnings.filterwarnings("ignore", category=RuntimeWarning, module=r"ddgs.*")
+
+from config import load_settings  # noqa: E402  — must come after the filters above
 from src.agent import AgentResult, ResearchAgent
 from src.llm import GeminiClient
 from src.tools import TOOL_SCHEMAS

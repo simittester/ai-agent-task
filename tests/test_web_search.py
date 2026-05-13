@@ -16,9 +16,9 @@ class _FakeDDGS:
 
 
 def _install_fake(monkeypatch, results):
-    fake_module = types.ModuleType("duckduckgo_search")
+    fake_module = types.ModuleType("ddgs")
     fake_module.DDGS = lambda: _FakeDDGS(results)
-    monkeypatch.setitem(sys.modules, "duckduckgo_search", fake_module)
+    monkeypatch.setitem(sys.modules, "ddgs", fake_module)
 
 
 def test_happy_path(monkeypatch):
@@ -49,9 +49,9 @@ def test_network_error_is_wrapped(monkeypatch):
         def __exit__(self, *a): return False
         def text(self, *a, **k): raise RuntimeError("network down")
 
-    fake_module = types.ModuleType("duckduckgo_search")
+    fake_module = types.ModuleType("ddgs")
     fake_module.DDGS = lambda: BoomDDGS()
-    monkeypatch.setitem(sys.modules, "duckduckgo_search", fake_module)
+    monkeypatch.setitem(sys.modules, "ddgs", fake_module)
 
     r = ws.web_search("anything")
     assert r["ok"] is False
