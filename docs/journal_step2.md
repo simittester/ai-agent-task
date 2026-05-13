@@ -1,4 +1,4 @@
-# Journal — Step 2 (2026-05-08)
+# Journal - Step 2 (2026-05-08)
 
 ## Updated system description
 
